@@ -12,5 +12,7 @@ namespace SoccerPouleSim.Core
         List<ITeam> Teams { get; }
         List<Match> Matches { get; }
         void GenerateMatches();
+
+        void Sim();
     }
 }

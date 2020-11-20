@@ -11,7 +11,7 @@ namespace SoccerPouleSim.Core
         public ITeam Team1 { get; init; }
         public ITeam Team2 { get; init; }
 
-        public int GoalsTeam1 { get; init; }
-        public int GoalsTeam2 { get; init; }
+        public int GoalsTeam1 { get; set; }
+        public int GoalsTeam2 { get; set; }
     }
 }
