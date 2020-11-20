@@ -11,8 +11,10 @@ namespace SoccerPouleSim.Core
         string Name { get; init; }
         List<ITeam> Teams { get; }
         List<Match> Matches { get; }
+        List<PouleResult> Results { get; }
         void GenerateMatches();
 
         void Sim();
+        void GenerateResults();
     }
 }

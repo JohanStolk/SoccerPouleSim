@@ -1,5 +1,6 @@
 ﻿using SoccerPouleSim.Core;
 using System;
+using System.Linq;
 
 namespace SoccerPouleSim.Cmd
 {
@@ -23,6 +24,12 @@ namespace SoccerPouleSim.Cmd
             foreach (Match match in poule.Matches)
                 Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
 
+            poule.GenerateResults();
+            foreach (PouleResult result in poule.Results)
+            {
+                Console.WriteLine("{0,30} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3}", 
+                    result.Team.Name, result.Played, result.Won, result.Draw, result.Lost, result.GoalsFor, result.GoalsAgainst, result.GoalDifference.ToString("+#;-#;0"), result.Points);
+             }
         }
     }
 }
