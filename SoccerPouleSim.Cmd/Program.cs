@@ -7,7 +7,6 @@ namespace SoccerPouleSim.Cmd
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             ITeam a = new SoccerTeam { Name = "The Netherlands", Rating = 0.9f };
             ITeam b = new SoccerTeam { Name = "Soviet Union", Rating = 0.9f };
             ITeam c = new SoccerTeam { Name = "Republic of Ireland", Rating = 0.3f };

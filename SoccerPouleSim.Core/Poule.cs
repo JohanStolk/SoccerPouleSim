@@ -22,19 +22,18 @@ namespace SoccerPouleSim.Core
         }
         public void GenerateMatches()
         {
+            bool swap = false;
             Matches.Clear();
             for (int i = 0; i < Teams.Count; i++)
             {
                 for (int j = i + 1; j < Teams.Count; j++)
                 {
-                    if ((i & 1) == 0)
-                    {
-                        Matches.Add(new Match { Team1 = Teams[i], Team2 = Teams[j] });
-                    }
-                    else
-                    {
+                    if (swap)
                         Matches.Add(new Match { Team1 = Teams[j], Team2 = Teams[i] });
-                    }
+                    else
+                        Matches.Add(new Match { Team1 = Teams[i], Team2 = Teams[j] });
+
+                    swap = !swap;
                 }
             }
         }
