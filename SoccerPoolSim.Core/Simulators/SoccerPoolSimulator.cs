@@ -10,6 +10,8 @@ namespace SoccerPoolSim.Core
     {
         private static Random random = new();
 
+        public string Name => GetType().Name; 
+
         public abstract void Simulate(IPool pool);
     }
 }

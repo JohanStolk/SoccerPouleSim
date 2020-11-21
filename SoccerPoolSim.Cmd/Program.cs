@@ -21,15 +21,18 @@ namespace SoccerPoolSim.Cmd
 
             pool.GenerateMatches();
 
-            ISoccerPoolSimulator simulator = new SoccerPoolSimulator.Draws();
+            Simulate(new SoccerPoolSimulator.Algorithm1(), pool);
+            Simulate(new SoccerPoolSimulator.Draws(), pool);
+            Simulate(new SoccerPoolSimulator.MutualResultGenerator(), pool);
+        }
+
+        static void Simulate (ISoccerPoolSimulator simulator, IPool pool)
+        {
+            Console.WriteLine("\nusing simulator: " + simulator.Name);
             simulator.Simulate(pool);
             pool.PrintMatches();
             pool.GenerateResults();
             pool.PrintResults();
-        }
-
-        static void Print ()
-        {
 
         }
     }

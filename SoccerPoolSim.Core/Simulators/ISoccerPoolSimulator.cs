@@ -8,6 +8,8 @@ namespace SoccerPoolSim.Core
 {
     public interface ISoccerPoolSimulator
     {
+        string Name { get; }
+
         void Simulate(IPool pool);
     }
 }
