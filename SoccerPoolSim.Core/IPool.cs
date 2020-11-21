@@ -14,7 +14,8 @@ namespace SoccerPoolSim.Core
         List<PoolResult> Results { get; }
         void GenerateMatches();
 
-        void Sim();
         void GenerateResults();
+        void PrintResults();
+        void PrintMatches();
     }
 }

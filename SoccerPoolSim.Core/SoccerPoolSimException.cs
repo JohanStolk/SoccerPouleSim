@@ -34,7 +34,7 @@ namespace SoccerPoolSim.Core
         public class PointsNotEqual : SoccerPoolSimException
         {
             public PointsNotEqual(PoolResult x, PoolResult y)
-                : base("Teams do not have the same points {0} : {1} pts, {2} : {3} pts", x.Team.Name, x.Points, y.Team.Name, y.Points)
+                : base("Teams do not have the same Points {0} : {1} pts, {2} : {3} pts", x.Team.Name, x.Points, y.Team.Name, y.Points)
             {
             }
         }

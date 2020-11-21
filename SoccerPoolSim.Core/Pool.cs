@@ -16,8 +16,6 @@ namespace SoccerPoolSim.Core
         public List<Match> Matches { get; } = new();
         public List<PoolResult> Results { get; private set; } = new();
 
-        private Random random = new();
-
         public void GenerateMatches()
         {
             bool swap = false;
@@ -33,41 +31,6 @@ namespace SoccerPoolSim.Core
 
                     swap = !swap;
                 }
-            }
-        }
-
-        public void Sim1()
-        {
-            foreach (Match match in Matches)
-            {
-                float r1 = match.Team1.Rating;
-                float r2 = match.Team2.Rating;
-                float diff = r2 - r1; // diff [0f..1f] 0 if teams equal, -1/1 if max difference
-
-                // the bigger the difference the more change of high score goals (13 as a limit)
-                // plus some random goals to prevent 0-0 if equal ratings
-                int goals = random.Next(0, (int)(Math.Abs(diff) * 13)) + random.Next(0, 4);
-
-                // the higher the winner factor the more chance that the stronger team wins (max 0.5f)
-                float winnerFactor = 0.5f;
-                float center = 0.5f + winnerFactor * diff;
-                for (int i = 0; i < goals; i++)
-                {
-                    if (random.NextDouble() > center)
-                        match.GoalsTeam1++;
-                    else
-                        match.GoalsTeam2++;
-                }
-            }
-        }
-        public void Sim()// Mutual()
-        {
-            foreach (Match match in Matches)
-            {
-                float r1 = match.Team1.Rating;
-                float r2 = match.Team2.Rating;
-                match.GoalsTeam1 += (int) (10 * r1);
-                match.GoalsTeam2 += (int)(10 * r2);                
             }
         }
 
@@ -89,7 +52,7 @@ namespace SoccerPoolSim.Core
                 if (match.Team1 == x.Team && match.Team2 == y.Team)
                     mutualGoals += match.GoalsTeam1 - match.GoalsTeam2;
                 else if (match.Team1 == y.Team && match.Team2 == x.Team)
-                    mutualGoals += match.GoalsTeam2 - match.GoalsTeam1;                
+                    mutualGoals += match.GoalsTeam2 - match.GoalsTeam1;
             }
 
             return mutualGoals;
@@ -143,6 +106,22 @@ namespace SoccerPoolSim.Core
             }
             //            Results = Results.OrderByDescending(r => r.Points).ToList();
             Results.Sort(new PoolResult.Comparer(this));
+        }
+
+
+        public void PrintResults()
+        {
+            foreach (PoolResult result in Results)
+            {
+                Console.WriteLine("{0,30} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3}",
+                    result.Team.Name, result.Played, result.Won, result.Draw, result.Lost, result.GoalsFor, result.GoalsAgainst, result.GoalDifference.ToString("+#;-#;0"), result.Points);
+            }
+        }
+
+        public void PrintMatches()
+        {
+            foreach (Match match in Matches)
+                Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
         }
     }
 }

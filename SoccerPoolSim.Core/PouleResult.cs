@@ -65,9 +65,9 @@ namespace SoccerPoolSim.Core
                 {
                     if (x.GoalDifference == y.GoalDifference)
                     {
-                        if (x.GoalDifference == y.GoalDifference)
+                        if (x.GoalsFor == y.GoalsFor)
                         {
-                            if (x.GoalDifference == y.GoalDifference)
+                            if (x.GoalsAgainst == y.GoalsAgainst)
                             {
                                 // the tricky case: need to compare matches when points & goal difference are the same
                                 return pool.CompareMutualResult(x, y);
