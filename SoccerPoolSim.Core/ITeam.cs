@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SoccerPouleSim.Core
+namespace SoccerPoolSim.Core
 {
     public interface ITeam
     {

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoccerPouleSim.Core
+namespace SoccerPoolSim.Core
 {
     /// <summary>
-    /// the total result of one team in a poule
+    /// the total result of one team in a pool
     /// </summary>
-    public class PouleResult
+    public class PoolResult
     {
         public ITeam Team { get; init; }
 
@@ -24,24 +24,29 @@ namespace SoccerPouleSim.Core
 
         public int Points { get; set; }
 
+        public PoolResult(ITeam team)
+        {
+            Team = team;
+        }
+
         /// <summary>
-        /// a comparer class to sort poule results
+        /// a comparer class to sort pool results
         /// implemented as a nested class because it is tightly linked to the containing class
         /// </summary>
-        public class Comparer : Comparer<PouleResult>
+        public class Comparer : Comparer<PoolResult>
         {
             /// <summary>
-            /// the poule for which the poule results are being sorted
+            /// the pool for which the pool results are being sorted
             /// </summary>
-            private Poule poule;
+            private Pool pool;
 
             /// <summary>
-            /// we need access to the Poule data in case there's a tie on points & goal difference
+            /// we need access to the Pool data in case there's a tie on points & goal difference
             /// </summary>
-            /// <param name="poule"></param>
-            public Comparer(Poule poule)
+            /// <param name="pool"></param>
+            public Comparer(Pool pool)
             {
-                this.poule = poule;
+                this.pool = pool;
             }
             /// <summary>
             /// TODO unit test this!
@@ -49,8 +54,13 @@ namespace SoccerPouleSim.Core
             /// <param name="x"></param>
             /// <param name="y"></param>
             /// <returns></returns>
-            public override int Compare(PouleResult x, PouleResult y)
+            public override int Compare(PoolResult ?x, PoolResult ?y)
             {
+                if (x == null)
+                    return -1;
+                if (y == null)
+                    return 1;
+
                 if (x.Points == y.Points)
                 {
                     if (x.GoalDifference == y.GoalDifference)
@@ -60,7 +70,7 @@ namespace SoccerPouleSim.Core
                             if (x.GoalDifference == y.GoalDifference)
                             {
                                 // the tricky case: need to compare matches when points & goal difference are the same
-                                return poule.CompareEqualPointsAndGoalDifferenceTie(x, y);
+                                return pool.CompareMutualResult(x, y);
                             }
                             return x.GoalsAgainst > y.GoalsAgainst ? 1 : -1;
                         }

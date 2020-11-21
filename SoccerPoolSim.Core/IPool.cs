@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SoccerPouleSim.Core
+namespace SoccerPoolSim.Core
 {
-    public interface IPoule
+    public interface IPool
     {
         string Name { get; init; }
         List<ITeam> Teams { get; }
         List<Match> Matches { get; }
-        List<PouleResult> Results { get; }
+        List<PoolResult> Results { get; }
         void GenerateMatches();
 
         void Sim();

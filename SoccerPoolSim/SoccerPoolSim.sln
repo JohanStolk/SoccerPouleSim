@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerPouleSim", "SoccerPouleSim.csproj", "{D7CC2F04-B63D-4A5E-8BB6-B99D729A2988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerPoolSim", "SoccerPoolSim.csproj", "{D7CC2F04-B63D-4A5E-8BB6-B99D729A2988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerPouleSim.Core", "..\SoccerPouleSim.Core\SoccerPouleSim.Core.csproj", "{4E40FB87-81CC-4DF4-9B7D-076D41AA4B7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerPoolSim.Core", "..\SoccerPoolSim.Core\SoccerPoolSim.Core.csproj", "{4E40FB87-81CC-4DF4-9B7D-076D41AA4B7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerPouleSim.Cmd", "..\SoccerPouleSim.Cmd\SoccerPouleSim.Cmd.csproj", "{8C62B768-B166-4F48-A221-B095C17D72AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerPoolSim.Cmd", "..\SoccerPoolSim.Cmd\SoccerPoolSim.Cmd.csproj", "{8C62B768-B166-4F48-A221-B095C17D72AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoccerSim.Test", "..\SoccerSim.Test\SoccerSim.Test.csproj", "{CF5F8E65-8B72-4095-A686-7D3A76549463}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoccerPoolSim.Test", "..\SoccerPoolSim.Test\SoccerPoolSim.Test.csproj", "{317C91CC-099D-4C8A-9C87-90A1D6DA1432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{8C62B768-B166-4F48-A221-B095C17D72AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C62B768-B166-4F48-A221-B095C17D72AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C62B768-B166-4F48-A221-B095C17D72AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF5F8E65-8B72-4095-A686-7D3A76549463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF5F8E65-8B72-4095-A686-7D3A76549463}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF5F8E65-8B72-4095-A686-7D3A76549463}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF5F8E65-8B72-4095-A686-7D3A76549463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317C91CC-099D-4C8A-9C87-90A1D6DA1432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317C91CC-099D-4C8A-9C87-90A1D6DA1432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317C91CC-099D-4C8A-9C87-90A1D6DA1432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317C91CC-099D-4C8A-9C87-90A1D6DA1432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
