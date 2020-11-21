@@ -8,9 +8,9 @@ namespace SoccerPoolSim.Cmd
     {
         static void Main(string[] args)
         {
-            ITeam a = new SoccerTeam("The Netherlands") { Rating = 1f };
+            ITeam a = new SoccerTeam("The Netherlands") { Rating = 0.9f };
             ITeam b = new SoccerTeam("Soviet Union") { Rating = 0.9f };
-            ITeam c = new SoccerTeam("Republic of Ireland") { Rating = 0f };
+            ITeam c = new SoccerTeam("Republic of Ireland") { Rating = 0.2f };
             ITeam d = new SoccerTeam("England") { Rating = 0.6f };
 
             IPool pool = new Pool { Name = "Group 2" };
@@ -24,6 +24,8 @@ namespace SoccerPoolSim.Cmd
             Simulate(new SoccerPoolSimulator.Algorithm1(), pool);
             Simulate(new SoccerPoolSimulator.Draws(), pool);
             Simulate(new SoccerPoolSimulator.MutualResultGenerator(), pool);
+            Simulate(new SoccerPoolSimulator.AllEqual(), pool);
+            Simulate(new SoccerPoolSimulator.RatingEqual(), pool);
         }
 
         static void Simulate (ISoccerPoolSimulator simulator, IPool pool)

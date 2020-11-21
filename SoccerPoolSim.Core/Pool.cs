@@ -54,7 +54,7 @@ namespace SoccerPoolSim.Core
                 else if (match.Team1 == y.Team && match.Team2 == x.Team)
                     mutualGoals += match.GoalsTeam2 - match.GoalsTeam1;
             }
-
+            x.IsTie = y.IsTie = (mutualGoals == 0);
             return mutualGoals;
         }
 
@@ -104,8 +104,20 @@ namespace SoccerPoolSim.Core
                     poolResult2.Points += 2;
                 }
             }
-            //            Results = Results.OrderByDescending(r => r.Points).ToList();
+
+            // sort using the special comparer
             Results.Sort(new PoolResult.Comparer(this));
+
+            // set the positions according to whether ties have been detected or not
+            int position = 0;
+            bool previousTie = false;
+            foreach (PoolResult result in Results)
+            {
+                if (!result.IsTie || !previousTie)
+                    position++;
+                result.Position = position;
+                previousTie = result.IsTie;
+            }
         }
 
 
@@ -113,8 +125,8 @@ namespace SoccerPoolSim.Core
         {
             foreach (PoolResult result in Results)
             {
-                Console.WriteLine("{0,30} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3}",
-                    result.Team.Name, result.Played, result.Won, result.Draw, result.Lost, result.GoalsFor, result.GoalsAgainst, result.GoalDifference.ToString("+#;-#;0"), result.Points);
+                Console.WriteLine("{0,30} Pos {9,2} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3} Tie {10}",
+                    result.Team.Name, result.Played, result.Won, result.Draw, result.Lost, result.GoalsFor, result.GoalsAgainst, result.GoalDifference.ToString("+#;-#;0"), result.Points, result.Position, result.IsTie);
             }
         }
 

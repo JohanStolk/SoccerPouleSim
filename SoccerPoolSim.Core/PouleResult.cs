@@ -12,7 +12,7 @@ namespace SoccerPoolSim.Core
     public class PoolResult
     {
         public ITeam Team { get; init; }
-
+        public int Position { get; internal set; }
         public int Played { get; set; }
         public int Won { get; set; }
         public int Draw { get; set; }
@@ -23,6 +23,7 @@ namespace SoccerPoolSim.Core
         public int GoalDifference { get { return GoalsFor - GoalsAgainst; } } // aka "doelsaldo" (Dutch)
 
         public int Points { get; set; }
+        public bool IsTie { get; internal set; }
 
         public PoolResult(ITeam team)
         {
