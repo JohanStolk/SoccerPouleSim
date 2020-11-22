@@ -34,7 +34,7 @@ namespace SoccerPoolSim.Core
             }
         }
 
-        internal int CompareMutualResult(PoolResult x, PoolResult y)
+        public int CompareMutualResult(PoolResult x, PoolResult y)
         {
             // if these requirements are not met we shouldn't compare mutual results
             if (x.Points != y.Points)
@@ -62,7 +62,10 @@ namespace SoccerPoolSim.Core
         {
             Results.Clear();
 
+            // create a temporary hashtable to achieve fast lookup of result by team
             Dictionary<ITeam, PoolResult> fastLookUp = new();
+            
+            // create the results and fill the hashtable
             foreach (ITeam team in Teams)
             {
                 PoolResult result = new PoolResult(team);
@@ -70,6 +73,7 @@ namespace SoccerPoolSim.Core
                 Results.Add(result);
             }
 
+            // add all data from the matches to the results
             foreach (Match match in Matches)
             {
                 PoolResult poolResult1 = fastLookUp[match.Team1];
@@ -138,6 +142,16 @@ namespace SoccerPoolSim.Core
         {
             foreach (Match match in Matches)
                 Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
+        }
+
+        public static IPool GenerateEK88Group2()
+        {
+            IPool pool = new Pool { Name = "Group 2" };
+            pool.Teams.Add(new SoccerTeam("The Netherlands") { Rating = 0.9f });
+            pool.Teams.Add(new SoccerTeam("Soviet Union") { Rating = 0.9f });
+            pool.Teams.Add(new SoccerTeam("Republic of Ireland") { Rating = 0.2f });
+            pool.Teams.Add(new SoccerTeam("England") { Rating = 0.6f });
+            return pool;
         }
     }
 }

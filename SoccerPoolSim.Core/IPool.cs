@@ -12,8 +12,8 @@ namespace SoccerPoolSim.Core
         List<ITeam> Teams { get; }
         List<Match> Matches { get; }
         List<PoolResult> Results { get; }
-        void GenerateMatches();
-
+        void GenerateMatches();        
+        int CompareMutualResult(PoolResult x, PoolResult y);
         void GenerateResults();
         void PrintResults();
         void PrintMatches();
