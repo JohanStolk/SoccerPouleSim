@@ -18,6 +18,9 @@ namespace SoccerPoolSim.Cmd
             pool.Teams.Add(b);
             pool.Teams.Add(c);
             pool.Teams.Add(d);
+            pool.Teams.Add(new SoccerTeam("San Marino") { Rating = 0 });
+            pool.Teams.Add(new SoccerTeam("San Marino 2") { Rating = 0 });
+            pool.Teams.Add(new SoccerTeam("San Marino 3") { Rating = 0 });
 
             pool.GenerateMatches();
 
