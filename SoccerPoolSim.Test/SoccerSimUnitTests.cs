@@ -52,9 +52,16 @@ namespace SoccerSim.Test
         {
             Pool pool = GeneratePoolWithMatches();
 
-            //Assert.ThrowsException<NullReferenceException>(() => cust = CustomerRepository.GetCustomer(""));
-            //  pool.CompareMutualResult();
+            Assert.ThrowsException<SoccerPoolSimException.PointsNotEqual>(() =>
+                pool.CompareMutualResult(new PoolResult(pool.Teams[0]) { Points = 2 }, new PoolResult(pool.Teams[1]) { Points = 1 }));
+
+            Assert.ThrowsException<SoccerPoolSimException.GoalDifferenceNotEqual>(() =>
+                pool.CompareMutualResult(new PoolResult(pool.Teams[0]) { GoalsFor = 2 }, new PoolResult(pool.Teams[1]) { GoalsFor = 1 }));
+
+            Assert.ThrowsException<SoccerPoolSimException.GoalsForNotEqual>(() =>
+                pool.CompareMutualResult(new PoolResult(pool.Teams[0]) { GoalsFor = 2, GoalsAgainst = 1 }, new PoolResult(pool.Teams[1]) { GoalsFor = 1 }));
         }
+
         [TestMethod]
         public void TestGenerateResults()
         {

@@ -1,26 +1,26 @@
 {
   "$id": "1",
-  "Name": "EK 88 Group 1",
+  "Name": "EK 88 Group 2",
   "Teams": [
     {
       "$id": "2",
-      "Name": "West Germany",
-      "Rating": 0.8
+      "Name": "The Netherlands",
+      "Rating": 0.9
     },
     {
       "$id": "3",
-      "Name": "Italy",
-      "Rating": 0.8
+      "Name": "Soviet Union",
+      "Rating": 0.9
     },
     {
       "$id": "4",
-      "Name": "Spain",
-      "Rating": 0.5
+      "Name": "Republic of Ireland",
+      "Rating": 0.2
     },
     {
       "$id": "5",
-      "Name": "Denmark",
-      "Rating": 0.2
+      "Name": "England",
+      "Rating": 0.6
     }
   ],
   "Matches": [
@@ -32,8 +32,8 @@
       "Team2": {
         "$ref": "3"
       },
-      "GoalsTeam1": 4,
-      "GoalsTeam2": 4
+      "GoalsTeam1": 2,
+      "GoalsTeam2": 1
     },
     {
       "$id": "7",
@@ -43,8 +43,8 @@
       "Team2": {
         "$ref": "2"
       },
-      "GoalsTeam1": 2,
-      "GoalsTeam2": 4
+      "GoalsTeam1": 3,
+      "GoalsTeam2": 5
     },
     {
       "$id": "8",
@@ -54,8 +54,8 @@
       "Team2": {
         "$ref": "5"
       },
-      "GoalsTeam1": 4,
-      "GoalsTeam2": 1
+      "GoalsTeam1": 2,
+      "GoalsTeam2": 2
     },
     {
       "$id": "9",
@@ -65,8 +65,8 @@
       "Team2": {
         "$ref": "3"
       },
-      "GoalsTeam1": 2,
-      "GoalsTeam2": 4
+      "GoalsTeam1": 0,
+      "GoalsTeam2": 1
     },
     {
       "$id": "10",
@@ -76,8 +76,8 @@
       "Team2": {
         "$ref": "5"
       },
-      "GoalsTeam1": 4,
-      "GoalsTeam2": 1
+      "GoalsTeam1": 1,
+      "GoalsTeam2": 0
     },
     {
       "$id": "11",
@@ -87,8 +87,8 @@
       "Team2": {
         "$ref": "4"
       },
-      "GoalsTeam1": 1,
-      "GoalsTeam2": 2
+      "GoalsTeam1": 2,
+      "GoalsTeam2": 3
     }
   ],
   "Results": [
@@ -97,68 +97,68 @@
       "Team": {
         "$ref": "2"
       },
-      "Position": 1,
+      "Position": 0,
       "Played": 3,
       "Won": 2,
       "Draw": 1,
       "Lost": 0,
-      "GoalsFor": 12,
-      "GoalsAgainst": 7,
-      "GoalDifference": 5,
+      "GoalsFor": 9,
+      "GoalsAgainst": 6,
+      "GoalDifference": 3,
       "Points": 5,
-      "IsTie": true,
-      "GoalDifferenceString": "+5"
+      "IsTie": false,
+      "GoalDifferenceString": "+3"
     },
     {
       "$id": "13",
       "Team": {
         "$ref": "3"
       },
-      "Position": 1,
+      "Position": 0,
       "Played": 3,
       "Won": 2,
-      "Draw": 1,
-      "Lost": 0,
-      "GoalsFor": 12,
-      "GoalsAgainst": 7,
-      "GoalDifference": 5,
-      "Points": 5,
-      "IsTie": true,
-      "GoalDifferenceString": "+5"
+      "Draw": 0,
+      "Lost": 1,
+      "GoalsFor": 3,
+      "GoalsAgainst": 2,
+      "GoalDifference": 1,
+      "Points": 4,
+      "IsTie": false,
+      "GoalDifferenceString": "+1"
     },
     {
       "$id": "14",
       "Team": {
         "$ref": "4"
       },
-      "Position": 3,
+      "Position": 0,
       "Played": 3,
       "Won": 1,
       "Draw": 0,
       "Lost": 2,
       "GoalsFor": 6,
-      "GoalsAgainst": 9,
-      "GoalDifference": -3,
+      "GoalsAgainst": 8,
+      "GoalDifference": -2,
       "Points": 2,
       "IsTie": false,
-      "GoalDifferenceString": "-3"
+      "GoalDifferenceString": "-2"
     },
     {
       "$id": "15",
       "Team": {
         "$ref": "5"
       },
-      "Position": 4,
+      "Position": 0,
       "Played": 3,
       "Won": 0,
-      "Draw": 0,
-      "Lost": 3,
-      "GoalsFor": 3,
-      "GoalsAgainst": 10,
-      "GoalDifference": -7,
-      "Points": 0,
+      "Draw": 1,
+      "Lost": 2,
+      "GoalsFor": 4,
+      "GoalsAgainst": 6,
+      "GoalDifference": -2,
+      "Points": 1,
       "IsTie": false,
-      "GoalDifferenceString": "-7"
+      "GoalDifferenceString": "-2"
     }
   ]
 }

@@ -36,6 +36,11 @@ namespace SoccerPoolSim.Core
             }
         }
 
+        public Match FindMatch(Team team1, Team team2)
+        {
+            return Matches.First(m => m.Team1 == team1 && m.Team2 == team2 || m.Team1 == team2 && m.Team2 == team1);
+        }
+
         public int CompareMutualResult(PoolResult x, PoolResult y)
         {
             // if these requirements are not met we shouldn't compare mutual results
@@ -45,8 +50,9 @@ namespace SoccerPoolSim.Core
                 throw new SoccerPoolSimException.GoalDifferenceNotEqual(x, y);
             if (x.GoalsFor != y.GoalsFor)
                 throw new SoccerPoolSimException.GoalsForNotEqual(x, y);
-            if (x.GoalsAgainst != y.GoalsAgainst)
-                throw new SoccerPoolSimException.GoalsAgainstNotEqual(x, y);
+            // the case below can never happen as GoalsAgainst must be the same in case of same GoalDifference & same GoalsFor
+            // if (x.GoalsAgainst != y.GoalsAgainst)
+            //    throw new SoccerPoolSimException.GoalsAgainstNotEqual(x, y);
 
             int mutualGoals = 0;
             foreach (Match match in Matches)
@@ -65,21 +71,21 @@ namespace SoccerPoolSim.Core
             Results.Clear();
 
             // create a temporary hashtable to achieve fast lookup of result by team
-            Dictionary<string, PoolResult> fastLookUp = new();
-            
+            Dictionary<Team, PoolResult> fastLookUp = new();
+
             // create the results and fill the hashtable
             foreach (Team team in Teams)
             {
                 PoolResult result = new PoolResult(team);
-                fastLookUp[team.Name] = result;
+                fastLookUp[team] = result;
                 Results.Add(result);
             }
 
             // add all data from the matches to the results
             foreach (Match match in Matches)
             {
-                PoolResult poolResult1 = fastLookUp[match.Team1.Name];
-                PoolResult poolResult2 = fastLookUp[match.Team2.Name];
+                PoolResult poolResult1 = fastLookUp[match.Team1];
+                PoolResult poolResult2 = fastLookUp[match.Team2];
 
                 poolResult1.Played++;
                 poolResult2.Played++;
@@ -142,8 +148,8 @@ namespace SoccerPoolSim.Core
             {
                 Console.WriteLine("{0,30} Pos {9,2} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3} {10}",
                     result.Team.Name, result.Played, result.Won, result.Draw, result.Lost,
-                    result.GoalsFor, result.GoalsAgainst, result.GoalDifferenceString, 
-                    result.Points, result.Position, result.IsTie ? "tie":"");
+                    result.GoalsFor, result.GoalsAgainst, result.GoalDifferenceString,
+                    result.Points, result.Position, result.IsTie ? "tie" : "");
             }
         }
 
@@ -153,9 +159,18 @@ namespace SoccerPoolSim.Core
                 Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
         }
 
+        public static Pool GenerateEK88Group1()
+        {
+            Pool pool = new Pool { Name = "EK 88 Group 1" };
+            pool.Teams.Add(new Team("West Germany") { Rating = 0.8f });
+            pool.Teams.Add(new Team("Italy") { Rating = 0.8f });
+            pool.Teams.Add(new Team("Spain") { Rating = 0.5f });
+            pool.Teams.Add(new Team("Denmark") { Rating = 0.2f });
+            return pool;
+        }
         public static Pool GenerateEK88Group2()
         {
-            Pool pool = new Pool { Name = "Group 2" };
+            Pool pool = new Pool { Name = "EK 88 Group 2" };
             pool.Teams.Add(new Team("The Netherlands") { Rating = 0.9f });
             pool.Teams.Add(new Team("Soviet Union") { Rating = 0.9f });
             pool.Teams.Add(new Team("Republic of Ireland") { Rating = 0.2f });
@@ -163,23 +178,27 @@ namespace SoccerPoolSim.Core
             return pool;
         }
 
+        private static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
         public string AsJSON()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonConvert.SerializeObject(this, Formatting.Indented, jsonSerializerSettings);
         }
         public static Pool FromJSON(string json)
         {
-            return JsonConvert.DeserializeObject<Pool>(json);
+            Pool? pool = JsonConvert.DeserializeObject<Pool>(json, jsonSerializerSettings);
+            if (pool == null)
+                throw new SoccerPoolSimException("couldn't DeserializeObject<Pool> from " + json);
+            return pool;
         }
 
         public void Save(string path)
         {
-            using (StreamWriter sw = System.IO.File.CreateText(path))
+            using (StreamWriter sw = File.CreateText(path))
                 sw.WriteLine(AsJSON());
         }
         public static Pool Load(string path)
         {
-            using (StreamReader sr = System.IO.File.OpenText(path))
+            using (StreamReader sr = File.OpenText(path))
                 return FromJSON(sr.ReadToEnd());
         }
     }

@@ -59,10 +59,15 @@ html {
 }
 
 body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-    background-image: url('/images/background-initiation-new damage.jpg');
+    background-image: url(/images/background_dashboard.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    height: 100%;
+    width: 100%;
+    position: fixed;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -92,6 +97,7 @@ body {
 }
 
 footer {
+    background-color: #D8D6D0;
 }
 
 .footer-link {

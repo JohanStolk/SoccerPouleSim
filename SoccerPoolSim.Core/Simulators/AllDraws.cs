@@ -11,7 +11,7 @@ namespace SoccerPoolSim.Core
         /// <summary>
         /// this simulator generates only draws
         /// </summary>
-        public class Draws : SoccerPoolSimulator
+        public class AllDraws : SoccerPoolSimulator
         {
             public override void Simulate(Pool pool)
             {

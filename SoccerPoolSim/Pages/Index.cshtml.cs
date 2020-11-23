@@ -29,7 +29,7 @@ namespace SoccerPoolSim.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IWebHostEnvironment _env;
 
-        public Pool Pool { get; set; }
+        public Pool Pool { get; set; } = new Pool();
         public List<SelectListItem> SavedNames { get; } = new();
         public string SavedName { get; set; } = string.Empty;
         public List<SelectListItem> SimulatorNames { get { return simulatorSelects; } }
@@ -60,7 +60,7 @@ namespace SoccerPoolSim.Pages
 
         public void OnGet(string action = "", string simulatorName = "", string savedName = "")
         {
-            Pool = Pool.Load("current.json");
+            Pool = Pool.Load("current.json"); // this is how we keep state so info is kept accross sessions
 
             if (!string.IsNullOrEmpty(simulatorName))
                 SimulatorName = simulatorName;
@@ -80,14 +80,20 @@ namespace SoccerPoolSim.Pages
                     LoadSimulation();
                     break;
             }
-            Pool.Save("current.json");
+            Pool.Save("current.json"); // update our state
         }
+        public void OnPost(string action = "")
+        {
+            OnGet(action);
+        }
+        private string GetSimulationsPath() => Path.Combine(_env.WebRootPath, "simulations");
 
         private void Simulate()
         {
             try
             {
                 Simulator = simulators[SimulatorName];
+                Pool.GenerateMatches();
                 Simulator.Simulate(Pool);
                 Pool.GenerateResults();
             }
@@ -96,19 +102,12 @@ namespace SoccerPoolSim.Pages
                 _logger.LogError(e, "Simulate failed");
             }
         }
-
-        public void OnPost(string action = "")
-        {
-            OnGet(action);
-        }
-        private string GetSimulationsPath() => Path.Combine(_env.WebRootPath, "simulations");
-
         private void SaveSimulation()
         {
             try
             {
                 DateTime date = DateTime.Now;
-                string fileName = string.Format("{0}-{1}.json", SimulatorName, date.ToString("yyyyMMddHHmmss"));
+                string fileName = string.Format("{0}-{1}-{2}.json", Pool.Name, SimulatorName, date.ToString("yyyyMMddHHmmss"));
                 string path = Path.Combine(GetSimulationsPath(), fileName);
                 Pool.Save(path);
 
