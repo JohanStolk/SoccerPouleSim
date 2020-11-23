@@ -1,10 +1,113 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Soccer Pool Simulator";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="inner-container theme-showcase" role="main">
+    <div class="drop-shadow">
+        <h1>Soccer Pool Simulator</h1>
+
+        <div class="paragraph">
+            <form id="leaderboardForm" asp-page="./Index" method="get">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="flex-container">
+                            <div class="select-title">
+                                Simulator:
+                            </div>
+                            <div class="select-container">
+                                <select class="form-control" id="simulatorSelect" asp-for="SimulatorName" asp-items="Model.SimulatorNames"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    Title: <input type="text" asp-for="SimulatorName" />
+                    <input type="submit" value="Simulate" />
+                </p>
+            </form>
+            
+            <h2>@Model.Pool.Name</h2>
+            <div class="row">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Team</th>
+                      <th class="text-center">Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var team in Model.Pool.Teams.OrderByDescending(t => t.Rating).ThenBy(t => t.Name))
+                    {
+                    <tr>
+                      <td><img src="~/images/@(team.Name).webp" /> @Html.DisplayFor(x => team.Name)</td>
+                      <td class="text-center">@Html.DisplayFor(x => team.Rating)</td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+            </div>
+            
+            <div class="row">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Team1</th>
+                      <th>Team2</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var match in Model.Pool.Matches)
+                    {
+                    <tr>
+                      <td>@(Model.Pool.Matches.IndexOf(match)+1)</td>
+                      <td><img src="~/images/@(match.Team1.Name).webp" />@Html.DisplayFor(x => match.Team1.Name)</td>
+                      <td><img src="~/images/@(match.Team2.Name).webp" />@Html.DisplayFor(x => match.Team2.Name)</td>
+                      <td><img src="~/images/Soccerball.webp" />@(match.GoalsTeam1 + "-" + match.GoalsTeam2)</td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th colspan="5">Team</th>
+                      <th class="text-right">Played</th>
+                      <th class="text-right">Won</th>
+                      <th class="text-right">Draw</th>
+                      <th class="text-right">Lost</th>
+                      <th class="text-right">GFor</th>
+                      <th class="text-right">GAgainst</th>
+                      <th class="text-right">GDiff</th>
+                      <th class="text-right">Points</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach (var result in Model.Pool.Results)
+                    {
+                    <tr>
+                      <td class="text-center">@Html.DisplayFor(x => result.Position)</td>
+                      <td colspan="5"><img src="~/images/@(result.Team.Name).webp" />@Html.DisplayFor(x => result.Team.Name)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.Played)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.Won)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.Draw)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.Lost)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.GoalsFor)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.GoalsAgainst)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.GoalDifferenceString)</td>
+                      <td class="text-right">@Html.DisplayFor(x => result.Points)</td>
+                    </tr>
+                    }
+                  </tbody>
+                </table>
+            </div>
+        </div>        
+    </div>
 </div>

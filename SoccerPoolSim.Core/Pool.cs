@@ -141,7 +141,7 @@ namespace SoccerPoolSim.Core
             {
                 Console.WriteLine("{0,30} Pos {9,2} Pld {1,2} W {2} D {3} L {4} GF {5,2} GA {6,2} GD {7,3} Pts {8,3} {10}",
                     result.Team.Name, result.Played, result.Won, result.Draw, result.Lost,
-                    result.GoalsFor, result.GoalsAgainst, result.GoalDifference.ToString("+#;-#;0"), 
+                    result.GoalsFor, result.GoalsAgainst, result.GoalDifferenceString, 
                     result.Points, result.Position, result.IsTie ? "tie":"");
             }
         }

@@ -59,8 +59,9 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    background-image: url('/images/background-initiation-new damage.jpg');
 }
 .footer {
   position: absolute;
@@ -69,3 +70,85 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.background-div {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    color: #050000;
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+.theme-showcase {
+    padding-bottom: 32px;
+}
+
+footer {
+}
+
+.footer-link {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 0 0 7px 7px rgba(0, 0, 0, .75);
+    box-shadow: 0 0 7px 7px rgba(0, 0, 0, .75);
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 32px;
+}
+
+.paragraph {
+    background-color: #D8D6D0;
+    padding: 32px 48px;
+    margin: 0;
+}
+
+    .paragraph p {
+        font-weight: 500;
+    }
+
+.screenshot {
+    margin: auto;
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        padding-top: 50px;
+        line-height: 1.4;
+        font-size: 16px;
+    }
+
+    .paragraph {
+        padding: 6px 16px;
+    }
+
+        .paragraph p {
+            font-weight: normal;
+        }
+
+    .row > div {
+        padding: 0;
+    }
+}
+
+.img-shadow {
+    -webkit-filter: drop-shadow(-5px 5px 2px #222);
+    filter: drop-shadow(-5px 5px 2px #222);
+}
+
+.img-fullwidth {
+    width: 100%;
+}
+
+h1 { color: white;  padding: 20px; }
+img { padding: 10px; }

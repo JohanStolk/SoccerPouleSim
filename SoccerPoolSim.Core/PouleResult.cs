@@ -25,6 +25,7 @@ namespace SoccerPoolSim.Core
 
         public int Points { get; set; }
         public bool IsTie { get; internal set; }
+        public string GoalDifferenceString => GoalDifference.ToString("+#;-#;0");
 
         public PoolResult(ITeam team)
         {
