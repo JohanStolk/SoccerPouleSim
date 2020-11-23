@@ -1,11 +1,16 @@
 ﻿using SoccerPoolSim.Core;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SoccerPoolSim.Cmd
 {
     class Program
     {
+        /// <summary>
+        /// commandline test environment for quick prototyping
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             IPool pool = Pool.GenerateEK88Group2(); 
@@ -16,13 +21,17 @@ namespace SoccerPoolSim.Cmd
 
             pool.GenerateMatches();
 
-            Simulate(new SoccerPoolSimulator.Algorithm1(), pool);
-            Simulate(new SoccerPoolSimulator.Draws(), pool);
-            Simulate(new SoccerPoolSimulator.MutualResultGenerator(), pool);
-            Simulate(new SoccerPoolSimulator.AllEqual(), pool);
-            Simulate(new SoccerPoolSimulator.RatingEqual(), pool);
+            // test all known simulators
+            List<Type> simulators = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
+            foreach (Type simulatorType in simulators)
+                Simulate(SoccerSimTools.CreateInstanceOfType<SoccerPoolSimulator>(simulatorType), pool);            
         }
 
+        /// <summary>
+        /// test a given simulator and output the results
+        /// </summary>
+        /// <param name="simulator"></param>
+        /// <param name="pool"></param>
         static void Simulate (ISoccerPoolSimulator simulator, IPool pool)
         {
             Console.WriteLine("\nusing simulator: " + simulator.Name);
@@ -30,7 +39,6 @@ namespace SoccerPoolSim.Cmd
             pool.PrintMatches();
             pool.GenerateResults();
             pool.PrintResults();
-
         }
     }
 }
