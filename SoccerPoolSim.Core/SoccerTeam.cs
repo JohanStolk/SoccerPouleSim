@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,9 +19,21 @@ namespace SoccerPoolSim.Core
         /// </summary>
         public float Rating { get; set; } = 0.5f;
 
+        /// <summary>
+        /// ctor requires name
+        /// </summary>
+        /// <param name="name"></param>
         public SoccerTeam(string name)
         {
             Name = name;
+        }
+        /// <summary>
+        /// serialize complete object to string for maximum debug info using Json.NET
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

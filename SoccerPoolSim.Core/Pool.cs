@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -126,7 +127,14 @@ namespace SoccerPoolSim.Core
             }
         }
 
-
+        /// <summary>
+        /// serialize complete object to string for maximum debug info using Json.NET
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
         public void PrintResults()
         {
             foreach (PoolResult result in Results)
