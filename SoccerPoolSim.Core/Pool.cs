@@ -65,21 +65,21 @@ namespace SoccerPoolSim.Core
             Results.Clear();
 
             // create a temporary hashtable to achieve fast lookup of result by team
-            Dictionary<Team, PoolResult> fastLookUp = new();
+            Dictionary<string, PoolResult> fastLookUp = new();
             
             // create the results and fill the hashtable
             foreach (Team team in Teams)
             {
                 PoolResult result = new PoolResult(team);
-                fastLookUp[team] = result;
+                fastLookUp[team.Name] = result;
                 Results.Add(result);
             }
 
             // add all data from the matches to the results
             foreach (Match match in Matches)
             {
-                PoolResult poolResult1 = fastLookUp[match.Team1];
-                PoolResult poolResult2 = fastLookUp[match.Team2];
+                PoolResult poolResult1 = fastLookUp[match.Team1.Name];
+                PoolResult poolResult2 = fastLookUp[match.Team2.Name];
 
                 poolResult1.Played++;
                 poolResult2.Played++;

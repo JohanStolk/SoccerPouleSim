@@ -44,8 +44,10 @@ namespace SoccerPoolSim.Pages
             SimulatorName = Simulator.Name;
             FillSavedNames();
 
-            Pool = Core.Pool.GenerateEK88Group2();
-            Pool.GenerateMatches();
+            //Pool = Pool.GenerateEK88Group2();
+            //Pool.GenerateMatches();
+            //Simulate();
+            //Pool.Save("current.json");
         }
 
         private void FillSavedNames()
@@ -58,14 +60,13 @@ namespace SoccerPoolSim.Pages
 
         public void OnGet(string action = "", string simulatorName = "", string savedName = "")
         {
+            Pool = Pool.Load("current.json");
+
             if (!string.IsNullOrEmpty(simulatorName))
                 SimulatorName = simulatorName;
 
             if (!string.IsNullOrEmpty(savedName))
                 SavedName = savedName;
-
-            if (string.IsNullOrEmpty(action))
-                return;
 
             switch (action)
             {
@@ -79,6 +80,7 @@ namespace SoccerPoolSim.Pages
                     LoadSimulation();
                     break;
             }
+            Pool.Save("current.json");
         }
 
         private void Simulate()
@@ -122,7 +124,7 @@ namespace SoccerPoolSim.Pages
             try
             {
                 string path = Path.Combine(GetSimulationsPath(), SavedName);                
-                Pool = Core.Pool.Load(path);
+                Pool = Pool.Load(path);
             }
             catch (Exception e)
             {
