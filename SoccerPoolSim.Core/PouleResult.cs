@@ -12,7 +12,7 @@ namespace SoccerPoolSim.Core
     /// </summary>
     public class PoolResult
     {
-        public ITeam Team { get; init; }
+        public Team Team { get; init; }
         public int Position { get; internal set; }
         public int Played { get; set; }
         public int Won { get; set; }
@@ -27,7 +27,7 @@ namespace SoccerPoolSim.Core
         public bool IsTie { get; internal set; }
         public string GoalDifferenceString => GoalDifference.ToString("+#;-#;0");
 
-        public PoolResult(ITeam team)
+        public PoolResult(Team team)
         {
             Team = team;
         }

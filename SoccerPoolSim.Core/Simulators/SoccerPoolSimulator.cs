@@ -12,6 +12,6 @@ namespace SoccerPoolSim.Core
 
         public string Name => GetType().Name; 
 
-        public abstract void Simulate(IPool pool);
+        public abstract void Simulate(Pool pool);
     }
 }

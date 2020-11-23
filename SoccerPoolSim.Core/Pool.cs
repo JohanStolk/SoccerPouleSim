@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,10 @@ namespace SoccerPoolSim.Core
     /// <summary>
     /// Pool with name
     /// </summary>
-    public class Pool : IPool
+    public class Pool
     {
         public string Name { get; init; } = "Unnamed Pool";
-        public List<ITeam> Teams { get; } = new();
+        public List<Team> Teams { get; } = new();
         public List<Match> Matches { get; } = new();
         public List<PoolResult> Results { get; private set; } = new();
 
@@ -64,10 +65,10 @@ namespace SoccerPoolSim.Core
             Results.Clear();
 
             // create a temporary hashtable to achieve fast lookup of result by team
-            Dictionary<ITeam, PoolResult> fastLookUp = new();
+            Dictionary<Team, PoolResult> fastLookUp = new();
             
             // create the results and fill the hashtable
-            foreach (ITeam team in Teams)
+            foreach (Team team in Teams)
             {
                 PoolResult result = new PoolResult(team);
                 fastLookUp[team] = result;
@@ -133,7 +134,7 @@ namespace SoccerPoolSim.Core
         /// <returns></returns>
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this);
+            return AsJSON();
         }
         public void PrintResults()
         {
@@ -152,14 +153,34 @@ namespace SoccerPoolSim.Core
                 Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
         }
 
-        public static IPool GenerateEK88Group2()
+        public static Pool GenerateEK88Group2()
         {
-            IPool pool = new Pool { Name = "Group 2" };
-            pool.Teams.Add(new SoccerTeam("The Netherlands") { Rating = 0.9f });
-            pool.Teams.Add(new SoccerTeam("Soviet Union") { Rating = 0.9f });
-            pool.Teams.Add(new SoccerTeam("Republic of Ireland") { Rating = 0.2f });
-            pool.Teams.Add(new SoccerTeam("England") { Rating = 0.6f });
+            Pool pool = new Pool { Name = "Group 2" };
+            pool.Teams.Add(new Team("The Netherlands") { Rating = 0.9f });
+            pool.Teams.Add(new Team("Soviet Union") { Rating = 0.9f });
+            pool.Teams.Add(new Team("Republic of Ireland") { Rating = 0.2f });
+            pool.Teams.Add(new Team("England") { Rating = 0.6f });
             return pool;
+        }
+
+        public string AsJSON()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+        public static Pool FromJSON(string json)
+        {
+            return JsonConvert.DeserializeObject<Pool>(json);
+        }
+
+        public void Save(string path)
+        {
+            using (StreamWriter sw = System.IO.File.CreateText(path))
+                sw.WriteLine(AsJSON());
+        }
+        public static Pool Load(string path)
+        {
+            using (StreamReader sr = System.IO.File.OpenText(path))
+                return FromJSON(sr.ReadToEnd());
         }
     }
 }

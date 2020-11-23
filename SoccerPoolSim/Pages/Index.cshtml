@@ -19,13 +19,22 @@
                             <div class="select-container">
                                 <select class="form-control" id="simulatorSelect" asp-for="SimulatorName" asp-items="Model.SimulatorNames"></select>
                             </div>
+                            <input type="submit" name="action" value="simulate" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="flex-container">
+                            <div class="select-title">
+                                Saves:
+                            </div>
+                            <div class="select-container">
+                                <select class="form-control" id="saveSelect" asp-for="SavedName" asp-items="Model.SavedNames"></select>
+                            </div>
+                            <input type="submit" name=action value="save" />
+                            <input type="submit" name=action value="load" />
                         </div>
                     </div>
                 </div>
-                <p>
-                    Title: <input type="text" asp-for="SimulatorName" />
-                    <input type="submit" value="Simulate" />
-                </p>
             </form>
             
             <h2>@Model.Pool.Name</h2>

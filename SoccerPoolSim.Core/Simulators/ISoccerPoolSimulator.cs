@@ -10,6 +10,6 @@ namespace SoccerPoolSim.Core
     {
         string Name { get; }
 
-        void Simulate(IPool pool);
+        void Simulate(Pool pool);
     }
 }

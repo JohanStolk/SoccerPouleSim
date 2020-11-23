@@ -8,7 +8,7 @@ namespace SoccerPoolSim.Core
     /// <summary>
     /// Soccer team with name and rating
     /// </summary>
-    public class SoccerTeam : ITeam
+    public class Team
     {
         /// <summary>
         /// Team name e.g. "The Netherlands"
@@ -23,7 +23,7 @@ namespace SoccerPoolSim.Core
         /// ctor requires name
         /// </summary>
         /// <param name="name"></param>
-        public SoccerTeam(string name)
+        public Team(string name)
         {
             Name = name;
         }

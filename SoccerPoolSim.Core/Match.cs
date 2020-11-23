@@ -8,13 +8,13 @@ namespace SoccerPoolSim.Core
 {
     public class Match
     {
-        public ITeam Team1 { get; }
-        public ITeam Team2 { get; }
+        public Team Team1 { get; }
+        public Team Team2 { get; }
 
         public int GoalsTeam1 { get; set; }
         public int GoalsTeam2 { get; set; }
 
-        public Match(ITeam team1, ITeam team2)
+        public Match(Team team1, Team team2)
         {
             Team1 = team1;
             Team2 = team2;

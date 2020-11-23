@@ -13,7 +13,7 @@ namespace SoccerPoolSim.Core
         /// </summary>
         public class MutualResultGenerator : SoccerPoolSimulator
         {
-            public override void Simulate(IPool pool)
+            public override void Simulate(Pool pool)
             {
                 foreach (Match match in pool.Matches)
                 {
