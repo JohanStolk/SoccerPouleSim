@@ -13,16 +13,11 @@ namespace SoccerPoolSim.Pages
 {
     public class IndexModel : PageModel
     {
-        private static List<Type> simulatorTypes = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
-        private static Dictionary<string, SoccerPoolSimulator> simulators = new();
         private static List<SelectListItem> simulatorSelects = new();
 
         static IndexModel()
         {
-            foreach (Type simulatorType in simulatorTypes)
-                simulators[simulatorType.Name] = SoccerSimTools.CreateInstanceOfType<SoccerPoolSimulator>(simulatorType);
-
-            foreach (KeyValuePair<string, SoccerPoolSimulator> simulatorKvp in simulators)
+            foreach (KeyValuePair<string, SoccerPoolSimulator> simulatorKvp in SoccerPoolSimulator.Simulators)
                 simulatorSelects.Add(new SelectListItem { Text = simulatorKvp.Key, Value = simulatorKvp.Key });
         }
 
@@ -43,11 +38,12 @@ namespace SoccerPoolSim.Pages
 
             SimulatorName = Simulator.Name;
             FillSavedNames();
-
-            //Pool = Pool.GenerateEK88Group2();
-            //Pool.GenerateMatches();
-            //Simulate();
-            //Pool.Save("current.json");
+#if GENERATE_CURRENT_JSON
+            Pool = Pool.GenerateEK88Group2();
+            ool.GenerateMatches();
+            Simulate();
+            Pool.Save("current.json");
+#endif
         }
 
         private void FillSavedNames()
@@ -92,7 +88,7 @@ namespace SoccerPoolSim.Pages
         {
             try
             {
-                Simulator = simulators[SimulatorName];
+                Simulator = SoccerPoolSimulator.Simulators[SimulatorName];
                 Pool.GenerateMatches();
                 Simulator.Simulate(Pool);
                 Pool.GenerateResults();

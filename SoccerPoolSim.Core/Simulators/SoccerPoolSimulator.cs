@@ -6,12 +6,42 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// abstract base class for all simulators, implemented as nested classes in this partial class
+    /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
+        /// <summary>
+        /// the collection of all simulators, key = simulator name
+        /// </summary>
+        public static Dictionary<string, SoccerPoolSimulator> Simulators { get { return simulators; } }
+
+        /// <summary>
+        /// utility object to generate random numbers for simulations
+        /// </summary>
         private static Random random = new();
 
-        public string Name => GetType().Name; 
+        /// <summary>
+        /// get the name by reflection
+        /// </summary>
+        public string Name => GetType().Name;
 
+        /// <summary>
+        /// simulate the pool by generating match results
+        /// </summary>
+        /// <param name="pool">the pool to simulate</param>
         public abstract void Simulate(Pool pool);
+
+        /// <summary>
+        /// code to generate the Simulators collection using in the website & unit tests
+        /// </summary>
+        private static List<Type> simulatorTypes = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
+        private static Dictionary<string, SoccerPoolSimulator> simulators = new();
+
+        static SoccerPoolSimulator()
+        {
+            foreach (Type simulatorType in simulatorTypes)
+                simulators[simulatorType.Name] = SoccerSimTools.CreateInstanceOfType<SoccerPoolSimulator>(simulatorType);
+        }
     }
 }

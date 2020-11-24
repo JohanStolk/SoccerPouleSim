@@ -3,13 +3,16 @@ using SoccerPoolSim.Core;
 
 namespace SoccerSim.Test
 {
+    /// <summary>
+    /// unit test class
+    /// </summary>
     [TestClass]
     public class SoccerSimUnitTests
     {
         /// <summary>
         /// helper for start scenarios in tests
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Pool</returns>
         public Pool GeneratePoolWithMatches()
         {
             Pool pool = Pool.GenerateEK88Group2();
@@ -19,7 +22,6 @@ namespace SoccerSim.Test
         /// <summary>
         /// test generating matches 4 teams => 4*3/2 = 6 matches
         /// </summary>
-        /// <returns></returns>
         [TestMethod]
         public void TestGenerateMatches()
         {
@@ -30,9 +32,8 @@ namespace SoccerSim.Test
             Assert.IsTrue(pool.Matches.Count == 6, "ek88 group 2 should have 6 matches, not " + pool.Matches.Count);
         }
         /// <summary>
-        /// test generating more matches 4.. 14 teams =>
+        /// test generating more matches 4.. 14 teams
         /// </summary>
-        /// <returns></returns>
         [TestMethod]
         public void TestGenerateMoreMatches()
         {
@@ -47,6 +48,9 @@ namespace SoccerSim.Test
                 pool.Teams.Add(new Team("Test team " + i));
             }
         }
+        /// <summary>
+        /// test the CompareMutualResult for expected exceptions
+        /// </summary>
         [TestMethod]
         public void TestCompareMutualResult()
         {
@@ -62,6 +66,9 @@ namespace SoccerSim.Test
                 pool.CompareMutualResult(new PoolResult(pool.Teams[0]) { GoalsFor = 2, GoalsAgainst = 1 }, new PoolResult(pool.Teams[1]) { GoalsFor = 1 }));
         }
 
+        /// <summary>
+        /// test the GenerateResults() method
+        /// </summary>
         [TestMethod]
         public void TestGenerateResults()
         {
@@ -69,9 +76,17 @@ namespace SoccerSim.Test
 
             pool.GenerateResults();
             Assert.IsTrue(pool.Results.Count == pool.Teams.Count, "expected # results {0} but found {1} in {2}", pool.Teams.Count, pool.Results.Count, pool);
+
+            PoolResult? previousResult = null;
             foreach (PoolResult result in pool.Results)
             {
                 Assert.IsTrue(result.Played == (pool.Teams.Count - 1), "expected # matches played {0} for team {1} but found {2} in {3}", pool.Teams.Count - 1, result.Team, result.Played, pool);
+                if (previousResult != null)
+                {
+                    int x = pool.CompareMutualResult(previousResult, result);
+                    Assert.IsTrue(x <= -23, "sorting result {0} should be > 0 when comparing 2 results in a sorted collection, results: {1} and {2}", x, previousResult, result);
+                }
+                previousResult = result;
             }
         }
     }

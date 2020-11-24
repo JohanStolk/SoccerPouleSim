@@ -21,12 +21,24 @@ namespace SoccerPoolSim.Core
 
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
-        public int GoalDifference { get { return GoalsFor - GoalsAgainst; } } // aka "doelsaldo" (Dutch)
+        /// <summary>
+        /// aka "doelsaldo" (Dutch)
+        /// </summary>
+        public int GoalDifference { get { return GoalsFor - GoalsAgainst; } }
 
         public int Points { get; set; }
+        /// <summary>
+        /// if this is true teams are equal in all cases so position will be the same
+        /// </summary>
         public bool IsTie { get; internal set; }
+        /// <summary>
+        /// string representation of goal difference with +/- sign
+        /// </summary>
         public string GoalDifferenceString => GoalDifference.ToString("+#;-#;0");
-
+        /// <summary>
+        /// ctor, team is required, other data filled by GenerateResults() in Pool
+        /// </summary>
+        /// <param name="team"></param>
         public PoolResult(Team team)
         {
             Team = team;
@@ -61,16 +73,16 @@ namespace SoccerPoolSim.Core
                 this.pool = pool;
             }
             /// <summary>
-            /// TODO unit test this!
+            /// Compare 2 pool results for sorting the results in the pool
             /// </summary>
             /// <param name="x"></param>
             /// <param name="y"></param>
-            /// <returns></returns>
+            /// <returns>number indicating sort result: 0 means equal, otherwise positive or negative depending on order to generate</returns>
             public override int Compare(PoolResult ?x, PoolResult ?y)
             {
-                if (x == null)
+                if (x == null) // do something with null values to satisfy ntr
                     return -1;
-                if (y == null)
+                if (y == null) // do something with null values to satisfy ntr
                     return 1;
 
                 if (x.Points == y.Points)
@@ -81,10 +93,10 @@ namespace SoccerPoolSim.Core
                         {
                             //if (x.GoalsAgainst == y.GoalsAgainst) implicitly met by above tests
                             //{
-                                // the tricky case: need to compare matches when points & goal difference are the same
+                                // the tricky case: need to compare mutual match when points & goal difference are the same
                                 return pool.CompareMutualResult(x, y);
                             //}
-                            //return x.GoalsAgainst > y.GoalsAgainst ? 1 : -1;
+                            //return x.GoalsAgainst > y.GoalsAgainst ? 1 : -1; // can't occur because GoalDifference and GoalsFor are the same
                         }
                         return x.GoalsFor < y.GoalsFor ? 1 : -1;
                     }

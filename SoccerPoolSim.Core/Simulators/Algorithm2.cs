@@ -11,12 +11,12 @@ namespace SoccerPoolSim.Core
         /// <summary>
         /// this simulator generates matches according to a custom algorithm 
         /// </summary>
-        public class Algorithm1 : SoccerPoolSimulator
+        public class Algorithm2 : SoccerPoolSimulator
         {
             /// <summary>
-            /// the higher the winner factor the more chance that the stronger team wins(max 0.5f)
+            /// rare chance that stronger team scores [0.0..1.0]
             /// </summary>
-            public float WinnerFactor { get; set; } = 0.3f; // [0.0f..0.5f]
+            public double WinnerScoreFactor { get; set; } = 0.8;
             /// <summary>
             /// simulate the pool by generating match results
             /// </summary>
@@ -27,19 +27,19 @@ namespace SoccerPoolSim.Core
                 {
                     float r1 = match.Team1.Rating;
                     float r2 = match.Team2.Rating;
-                    float diff = r2 - r1; // diff [0f..1f] 0 if teams equal, -1/1 if max difference
+                    Team weakest = r1 < r2 ? match.Team1 : match.Team2;
+                    Team strongest = r1 < r2 ? match.Team2 : match.Team1;
 
-                    // the bigger the difference the more change of high score goals (13 as a limit)
-                    // plus some random goals to prevent 0-0 if equal ratings
-                    int goals = random.Next(0, (int)(Math.Abs(diff) * 13)) + random.Next(0, 4);
+                    // the bigger the difference the more change of goals
+                    int totalGoals = random.Next(0, (int)(Math.Abs(r2 - r1) * 10));
 
-                    float center = 0.5f + WinnerFactor * diff;
-                    for (int i = 0; i < goals; i++)
+                    for (int i = 0; i < totalGoals; i++)
                     {
-                        if (random.NextDouble() > center)
-                            match.GoalsTeam1++;
+                        double luckyNumber = random.NextDouble();
+                        if (luckyNumber < WinnerScoreFactor)
+                            match.ScoreGoal(strongest);
                         else
-                            match.GoalsTeam2++;
+                            match.ScoreGoal(weakest);
                     }
                 }
             }

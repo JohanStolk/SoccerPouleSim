@@ -13,6 +13,10 @@ namespace SoccerPoolSim.Core
         /// </summary>
         public class AllEqual : SoccerPoolSimulator
         {
+            /// <summary>
+            /// simulate the pool by generating match results
+            /// </summary>
+            /// <param name="pool">the pool to simulate</param>
             public override void Simulate(Pool pool)
             {
                 foreach (Match match in pool.Matches)
