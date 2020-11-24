@@ -30,7 +30,7 @@ namespace SoccerPoolSim.Core
             return JsonConvert.SerializeObject(this);
         }
 
-        public void ScoreGoal(Team team)
+        public Match ScoreGoal(Team team)
         {
             if (team == Team1)
                 GoalsTeam1++;
@@ -38,9 +38,10 @@ namespace SoccerPoolSim.Core
                 GoalsTeam2++;
             else
                 throw new SoccerPoolSimException("couldn't find team {0} in match {1}", team.Name, this);
+            return this;
         }
 
-        public void CancelGoal(Team team)
+        public Match CancelGoal(Team team)
         {
             if (team == Team1)
             {
@@ -57,6 +58,8 @@ namespace SoccerPoolSim.Core
             }
             else
                 throw new SoccerPoolSimException("couldn't find team {0} in match {1}", team.Name, this);
+
+            return this;
         }
     }
 }

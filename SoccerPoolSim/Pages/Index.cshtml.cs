@@ -77,12 +77,22 @@ namespace SoccerPoolSim.Pages
             SimulatorName = SimulatorNames[0].Text;
             FillSavedNames();
 
-            // code below can be used to generate an initial state json file
+            // code below can be used to generate an initial state json files
 #if GENERATE_CURRENT_JSON
             Pool = Pool.GenerateEK88Group2();
             Pool.GenerateMatches();
             Simulate();
             Pool.Save("current.json");
+#endif
+#if GENERATE_GROUP2_JSON
+            Pool = Pool.GenerateEK88Group2WithMatches();
+            Pool.GenerateResults();
+            Pool.Save("EK-1988-Group2.json");
+#endif
+#if GENERATE_GROUP1_JSON
+            Pool = Pool.GenerateEK88Group1();
+            //Pool.GenerateResults();
+            Pool.Save("EK-1988-Group1.json");
 #endif
         }
 

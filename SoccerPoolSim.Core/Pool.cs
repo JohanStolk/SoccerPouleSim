@@ -203,6 +203,30 @@ namespace SoccerPoolSim.Core
             pool.Teams.Add(new Team("England") { Rating = 0.6f });
             return pool;
         }
+        /// <summary>
+        /// create the teams & matches for EK '88 group 2
+        /// </summary>
+        /// <returns></returns>
+        public static Pool GenerateEK88Group2WithMatches()
+        {
+            Pool pool = new Pool { Name = "EK 88 Group 2" };
+            Team NL = new Team("The Netherlands") { Rating = 0.9f };
+            Team SU = new Team("Soviet Union") { Rating = 0.9f };
+            Team RI = new Team("Republic of Ireland") { Rating = 0.2f };
+            Team EN = new Team("England") { Rating = 0.6f };
+            pool.Teams.Add(NL);
+            pool.Teams.Add(SU);
+            pool.Teams.Add(RI);
+            pool.Teams.Add(EN);
+            pool.GenerateMatches();
+            pool.FindMatch(EN, RI).ScoreGoal(RI);
+            pool.FindMatch(NL, SU).ScoreGoal(SU);
+            pool.FindMatch(NL, EN).ScoreGoal(NL).ScoreGoal(NL).ScoreGoal(NL).ScoreGoal(EN);
+            pool.FindMatch(RI, SU).ScoreGoal(SU).ScoreGoal(RI);
+            pool.FindMatch(EN, SU).ScoreGoal(SU).ScoreGoal(SU).ScoreGoal(SU).ScoreGoal(EN); ;
+            pool.FindMatch(NL, RI).ScoreGoal(NL); // Kieft :-) 
+            return pool;
+        }
 
         /// <summary>
         /// to preserve references and avoid object cloning during serialization with JSON.NET we use this setting:

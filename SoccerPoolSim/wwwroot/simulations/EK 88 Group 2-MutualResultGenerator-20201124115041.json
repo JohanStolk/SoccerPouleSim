@@ -97,7 +97,7 @@
       "Team": {
         "$ref": "2"
       },
-      "Position": 0,
+      "Position": 1,
       "Played": 3,
       "Won": 1,
       "Draw": 1,
@@ -114,7 +114,7 @@
       "Team": {
         "$ref": "3"
       },
-      "Position": 0,
+      "Position": 2,
       "Played": 3,
       "Won": 1,
       "Draw": 1,
@@ -131,7 +131,7 @@
       "Team": {
         "$ref": "4"
       },
-      "Position": 0,
+      "Position": 3,
       "Played": 3,
       "Won": 1,
       "Draw": 1,
@@ -148,7 +148,7 @@
       "Team": {
         "$ref": "5"
       },
-      "Position": 0,
+      "Position": 4,
       "Played": 3,
       "Won": 0,
       "Draw": 3,
