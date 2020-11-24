@@ -41,6 +41,12 @@ namespace SoccerPoolSim.Core
             return Matches.First(m => m.Team1 == team1 && m.Team2 == team2 || m.Team1 == team2 && m.Team2 == team1);
         }
 
+        /// <summary>
+        /// if points & goal difference & goals for are equal the mutual result must be checked to determine the winner
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public int CompareMutualResult(PoolResult x, PoolResult y)
         {
             // if these requirements are not met we shouldn't compare mutual results
@@ -54,6 +60,7 @@ namespace SoccerPoolSim.Core
             // if (x.GoalsAgainst != y.GoalsAgainst)
             //    throw new SoccerPoolSimException.GoalsAgainstNotEqual(x, y);
 
+            // we collect all goals from all matches to make a decision
             int mutualGoals = 0;
             foreach (Match match in Matches)
             {
@@ -66,6 +73,9 @@ namespace SoccerPoolSim.Core
             return -mutualGoals;
         }
 
+        /// <summary>
+        /// generate the results collection based on the matches outcome
+        /// </summary>
         public void GenerateResults()
         {
             Results.Clear();
@@ -142,6 +152,10 @@ namespace SoccerPoolSim.Core
         {
             return AsJSON();
         }
+
+        /// <summary>
+        /// print the results to the console
+        /// </summary>
         public void PrintResults()
         {
             foreach (PoolResult result in Results)
@@ -153,12 +167,19 @@ namespace SoccerPoolSim.Core
             }
         }
 
+        /// <summary>
+        /// print the matches to the console
+        /// </summary>
         public void PrintMatches()
         {
             foreach (Match match in Matches)
                 Console.WriteLine(match.Team1.Name + " - " + match.Team2.Name + " " + match.GoalsTeam1 + "-" + match.GoalsTeam2);
         }
 
+        /// <summary>
+        /// create the teams for EK '88 group 1
+        /// </summary>
+        /// <returns></returns>
         public static Pool GenerateEK88Group1()
         {
             Pool pool = new Pool { Name = "EK 88 Group 1" };
@@ -168,6 +189,11 @@ namespace SoccerPoolSim.Core
             pool.Teams.Add(new Team("Denmark") { Rating = 0.2f });
             return pool;
         }
+
+        /// <summary>
+        /// create the teams for EK '88 group 2
+        /// </summary>
+        /// <returns></returns>
         public static Pool GenerateEK88Group2()
         {
             Pool pool = new Pool { Name = "EK 88 Group 2" };
@@ -178,11 +204,25 @@ namespace SoccerPoolSim.Core
             return pool;
         }
 
+        /// <summary>
+        /// to preserve references and avoid object cloning during serialization with JSON.NET we use this setting:
+        /// </summary>
         private static JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+
+        /// <summary>
+        /// convert this object to a json string
+        /// </summary>
+        /// <returns></returns>
         public string AsJSON()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented, jsonSerializerSettings);
         }
+
+        /// <summary>
+        /// create a Pool object from a json string
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public static Pool FromJSON(string json)
         {
             Pool? pool = JsonConvert.DeserializeObject<Pool>(json, jsonSerializerSettings);
@@ -191,11 +231,22 @@ namespace SoccerPoolSim.Core
             return pool;
         }
 
+        /// <summary>
+        /// save this Pool object to disk
+        /// </summary>
+        /// <param name="path"></param>
+
         public void Save(string path)
         {
             using (StreamWriter sw = File.CreateText(path))
                 sw.WriteLine(AsJSON());
         }
+
+        /// <summary>
+        /// load a new Pool instance from disk
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static Pool Load(string path)
         {
             using (StreamReader sr = File.OpenText(path))

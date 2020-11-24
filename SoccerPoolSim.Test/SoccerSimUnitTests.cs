@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SoccerPoolSim.Core;
+using System.Collections.Generic;
 
 namespace SoccerSim.Test
 {
@@ -73,20 +74,40 @@ namespace SoccerSim.Test
         public void TestGenerateResults()
         {
             Pool pool = GeneratePoolWithMatches();
+            TestResults(pool);
+        }
 
+        private void TestResults(Pool pool)
+        {
             pool.GenerateResults();
             Assert.IsTrue(pool.Results.Count == pool.Teams.Count, "expected # results {0} but found {1} in {2}", pool.Teams.Count, pool.Results.Count, pool);
 
+            Comparer<PoolResult> comparer =  new PoolResult.Comparer(pool);
             PoolResult? previousResult = null;
             foreach (PoolResult result in pool.Results)
             {
                 Assert.IsTrue(result.Played == (pool.Teams.Count - 1), "expected # matches played {0} for team {1} but found {2} in {3}", pool.Teams.Count - 1, result.Team, result.Played, pool);
                 if (previousResult != null)
                 {
-                    int x = pool.CompareMutualResult(previousResult, result);
-                    Assert.IsTrue(x <= -23, "sorting result {0} should be > 0 when comparing 2 results in a sorted collection, results: {1} and {2}", x, previousResult, result);
+                    int x = comparer.Compare(previousResult, result);
+                    Assert.IsTrue(x <= 0, "sorting result {0} should be > 0 when comparing 2 results in a sorted collection, results: {1} and {2}", x, previousResult, result);
                 }
                 previousResult = result;
+            }
+        }
+        /// <summary>
+        /// test all simulators
+        /// </summary>
+        [TestMethod]
+        public void TestSimulators()
+        {
+            Pool pool = GeneratePoolWithMatches();
+
+            foreach (var simulatorKvp in SoccerPoolSimulator.Simulators)
+            {
+                SoccerPoolSimulator simulator = simulatorKvp.Value;
+                simulator.Simulate(pool);
+                TestResults(pool);
             }
         }
     }
