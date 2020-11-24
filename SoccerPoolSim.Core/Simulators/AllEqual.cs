@@ -16,9 +16,7 @@ namespace SoccerPoolSim.Core
             public override void Simulate(Pool pool)
             {
                 foreach (Match match in pool.Matches)
-                {
                     match.GoalsTeam1 = match.GoalsTeam2 = 2;
-                }
             }
         }
     }

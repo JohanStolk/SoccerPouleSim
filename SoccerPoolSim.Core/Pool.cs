@@ -63,7 +63,7 @@ namespace SoccerPoolSim.Core
                     mutualGoals += match.GoalsTeam2 - match.GoalsTeam1;
             }
             x.IsTie = y.IsTie = (mutualGoals == 0);
-            return mutualGoals;
+            return -mutualGoals;
         }
 
         public void GenerateResults()

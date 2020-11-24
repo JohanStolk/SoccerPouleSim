@@ -9,20 +9,30 @@ namespace SoccerPoolSim.Core
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>
-        /// this simulator generates TODO 
+        /// this simulator generates equal goal difference and goals-for so mutual result must be checked for sorting 
         /// </summary>
         public class MutualResultGenerator : SoccerPoolSimulator
         {
             public override void Simulate(Pool pool)
             {
                 foreach (Match match in pool.Matches)
-                {
-                    float r1 = match.Team1.Rating;
-                    float r2 = match.Team2.Rating;
-                    match.GoalsTeam1 += (int)(10 * r1);
-                    match.GoalsTeam2 += (int)(10 * r2);
+                    match.GoalsTeam1 = match.GoalsTeam2 = 2;
 
-                }
+                if (pool.Teams.Count < 4)
+                    throw new SoccerPoolSimException("expected at least 4 teams in pool " + pool);
+
+                Team team1 = pool.Teams[0];
+                Team team2 = pool.Teams[1];
+                Team team3 = pool.Teams[2];
+                Team team4 = pool.Teams[3];
+                pool.FindMatch(team1, team2).ScoreGoal(team1);  // mutual result, team 1 is the winner, now team2 lost one, team1 won one, compensate below 
+                pool.FindMatch(team1, team3).CancelGoal(team1); // now team1 also has a loss
+                pool.FindMatch(team3, team2).ScoreGoal(team2);  // now team2 also has a win
+                pool.FindMatch(team4, team2).CancelGoal(team2); // now the goal difference is equal again
+                pool.FindMatch(team4, team2).CancelGoal(team4); // but result must stay a draw
+                // lower goal difference for other teams:
+                pool.FindMatch(team3, team4).CancelGoal(team4); 
+                pool.FindMatch(team3, team4).CancelGoal(team3);
             }
         }
     }
