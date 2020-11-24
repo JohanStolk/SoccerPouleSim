@@ -12,16 +12,6 @@ namespace SoccerPoolSim.Core
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>
-        /// the collection of all simulators, key = simulator name
-        /// </summary>
-        public static Dictionary<string, SoccerPoolSimulator> Simulators { get { return simulators; } }
-
-        /// <summary>
-        /// utility object to generate random numbers for simulations
-        /// </summary>
-        private static Random random = new();
-
-        /// <summary>
         /// get the name by reflection
         /// </summary>
         public string Name => GetType().Name;
@@ -33,11 +23,24 @@ namespace SoccerPoolSim.Core
         public abstract void Simulate(Pool pool);
 
         /// <summary>
+        /// the collection of all simulators, key = simulator name
+        /// </summary>
+        public static Dictionary<string, SoccerPoolSimulator> Simulators { get { return simulators; } }
+
+        /// <summary>
+        /// utility object to generate random numbers for simulations
+        /// </summary>
+        private static Random random = new();
+
+        /// <summary>
         /// code to generate the Simulators collection using in the website & unit tests
         /// </summary>
-        private static List<Type> simulatorTypes = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
-        private static Dictionary<string, SoccerPoolSimulator> simulators = new();
+        private static readonly List<Type> simulatorTypes = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
+        private static readonly Dictionary<string, SoccerPoolSimulator> simulators = new();
 
+        /// <summary>
+        /// static ctor to initialize simulatorTypes collection
+        /// </summary>
         static SoccerPoolSimulator()
         {
             foreach (Type simulatorType in simulatorTypes)

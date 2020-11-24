@@ -13,7 +13,7 @@ namespace SoccerPoolSim.Core
     public class PoolResult
     {
         public Team Team { get; init; }
-        public int Position { get; internal set; }
+        public int Position { get; set; }
         public int Played { get; set; }
         public int Won { get; set; }
         public int Draw { get; set; }
