@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// abstract base class for all simulators, contains nested classes with specific implementations
+    /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>
@@ -35,8 +38,7 @@ namespace SoccerPoolSim.Core
                 pool.FindMatch(team4, team2).CancelGoal(team2); // now the goal difference is equal again
                 pool.FindMatch(team4, team2).CancelGoal(team4); // but result must stay a draw
                 // lower goal difference for other teams:
-                pool.FindMatch(team3, team4).CancelGoal(team4); 
-                pool.FindMatch(team3, team4).CancelGoal(team3);
+                pool.FindMatch(team3, team4).CancelGoal(team4).CancelGoal(team3);
             }
         }
     }

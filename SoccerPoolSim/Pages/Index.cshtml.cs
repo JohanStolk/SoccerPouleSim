@@ -22,7 +22,7 @@ namespace SoccerPoolSim.Pages
         private static readonly List<SelectListItem> simulatorSelects = new();
 
         /// <summary>
-        /// static ctor filling the simulatorSelects collection
+        /// static ctor filling the simulatorSelects collection once
         /// </summary>
         static IndexModel()
         {
@@ -39,7 +39,7 @@ namespace SoccerPoolSim.Pages
         /// </summary>
         private readonly IWebHostEnvironment _env;
         /// <summary>
-        /// the path in which pool results are loaded/saved
+        /// the path in which pool results .json files are loaded/saved
         /// </summary>
         /// <returns></returns>
         private string SimulationsPath => Path.Combine(_env.WebRootPath, "simulations");
@@ -74,7 +74,8 @@ namespace SoccerPoolSim.Pages
             _logger = logger;
             _env = env;
 
-            SimulatorName = SimulatorNames[0].Text;
+            if (SimulatorNames.Count > 0)
+                SimulatorName = SimulatorNames[0].Text;
             FillSavedNames();
 
             // code below can be used to generate an initial state json files
@@ -123,17 +124,22 @@ namespace SoccerPoolSim.Pages
             if (!string.IsNullOrEmpty(savedName))
                 SavedName = savedName;
 
-            switch (action)
+            if (!string.IsNullOrEmpty(action))
             {
-                case "simulate":
-                    Simulate(SoccerPoolSimulator.Simulators[SimulatorName], Pool);
-                    break;
-                case "save":
-                    SaveSimulation();
-                    break;
-                case "load":
-                    LoadSimulation(SavedName);
-                    break;
+                switch (action)
+                {
+                    case "simulate":
+                        Simulate(SoccerPoolSimulator.Simulators[SimulatorName], Pool);
+                        break;
+                    case "save":
+                        SaveSimulation();
+                        break;
+                    case "load":
+                        LoadSimulation(SavedName);
+                        break;
+                    default:
+                        throw new SoccerPoolSimException("unknown action " + action);
+                }
             }
             Pool.Save("current.json"); // update our state
         }
@@ -191,7 +197,7 @@ namespace SoccerPoolSim.Pages
         {
             try
             {
-                string path = Path.Combine(SimulationsPath, name);                
+                string path = Path.Combine(SimulationsPath, name);
                 Pool = Pool.Load(path);
             }
             catch (Exception e)

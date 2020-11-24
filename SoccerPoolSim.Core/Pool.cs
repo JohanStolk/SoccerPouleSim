@@ -16,11 +16,14 @@ namespace SoccerPoolSim.Core
         public string Name { get; init; } = "Unnamed Pool";
         public List<Team> Teams { get; } = new();
         public List<Match> Matches { get; } = new();
-        public List<PoolResult> Results { get; private set; } = new();
+        public List<PoolResult> Results { get; set; } = new();
 
+        /// <summary>
+        /// generate matches for all teams, each team plays 1x against another team
+        /// </summary>
         public void GenerateMatches()
         {
-            bool swap = false;
+            bool swap = false; // swap order var for better distribution of names
             Matches.Clear();
             for (int i = 0; i < Teams.Count; i++)
             {
@@ -36,13 +39,19 @@ namespace SoccerPoolSim.Core
             }
         }
 
+        /// <summary>
+        /// find a match between team1 and team2 
+        /// </summary>
+        /// <param name="team1"></param>
+        /// <param name="team2"></param>
+        /// <returns></returns>
         public Match FindMatch(Team team1, Team team2)
         {
             return Matches.First(m => m.Team1 == team1 && m.Team2 == team2 || m.Team1 == team2 && m.Team2 == team1);
         }
 
         /// <summary>
-        /// if points & goal difference & goals for are equal the mutual result must be checked to determine the winner
+        /// if points & 'goal difference' & 'goals for' are equal: the mutual result must be checked to determine the winner here
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>

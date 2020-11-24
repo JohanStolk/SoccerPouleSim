@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// a match between 2 teams with # goals for each team
+    /// </summary>
     public class Match
     {
         public Team Team1 { get; }
@@ -15,6 +18,11 @@ namespace SoccerPoolSim.Core
         public int GoalsTeam1 { get; set; }
         public int GoalsTeam2 { get; set; }
 
+        /// <summary>
+        /// ctor requires team objects
+        /// </summary>
+        /// <param name="team1"></param>
+        /// <param name="team2"></param>
         public Match(Team team1, Team team2)
         {
             Team1 = team1;
@@ -30,6 +38,11 @@ namespace SoccerPoolSim.Core
             return JsonConvert.SerializeObject(this);
         }
 
+        /// <summary>
+        /// utility method to score a goal for given team
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
         public Match ScoreGoal(Team team)
         {
             if (team == Team1)
@@ -41,19 +54,23 @@ namespace SoccerPoolSim.Core
             return this;
         }
 
+        /// <summary>
+        /// utility method to remove a goal for given team
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
         public Match CancelGoal(Team team)
         {
             if (team == Team1)
             {
                 if (GoalsTeam1 == 0)
-                    throw new SoccerPoolSimException("no goal to cancel for team {0} in match {1}", team.Name, this);
+                    throw new SoccerPoolSimException("no goals left to cancel for team {0} in match {1}", team.Name, this);
                 GoalsTeam1--;
             }
             else if (team == Team2)
             {
                 if (GoalsTeam1 == 0)
-                    throw new SoccerPoolSimException("no goal to cancel for team {0} in match {1}", team.Name, this);
-
+                    throw new SoccerPoolSimException("no goals left to cancel for team {0} in match {1}", team.Name, this);
                 GoalsTeam2--;
             }
             else

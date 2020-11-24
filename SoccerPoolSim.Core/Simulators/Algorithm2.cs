@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// abstract base class for all simulators, contains nested classes with specific implementations
+    /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>
@@ -14,7 +17,7 @@ namespace SoccerPoolSim.Core
         public class Algorithm2 : SoccerPoolSimulator
         {
             /// <summary>
-            /// rare chance that stronger team scores [0.0..1.0]
+            /// chance that stronger team scores [0.0..1.0]
             /// </summary>
             public double WinnerScoreFactor { get; set; } = 0.8;
             /// <summary>

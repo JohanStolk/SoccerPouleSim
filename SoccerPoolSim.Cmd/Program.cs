@@ -13,18 +13,19 @@ namespace SoccerPoolSim.Cmd
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Pool pool = Pool.GenerateEK88Group2(); 
+            Pool pool = Pool.GenerateEK88Group2();
 
-           // pool.Teams.Add(new Team("San Marino") { Rating = 0 });
-           // pool.Teams.Add(new Team("San Marino 2") { Rating = 0 });
-           // pool.Teams.Add(new Team("San Marino 3") { Rating = 0 });
+#if TEST_MORE_TEAMS
+            pool.Teams.Add(new Team("San Marino") { Rating = 0 });
+            pool.Teams.Add(new Team("San Marino 2") { Rating = 0 });
+            pool.Teams.Add(new Team("San Marino 3") { Rating = 0 });
+#endif
 
             pool.GenerateMatches();
 
             // test all known simulators
-            List<Type> simulators = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
-            foreach (Type simulatorType in simulators)
-                Simulate(SoccerSimTools.CreateInstanceOfType<SoccerPoolSimulator>(simulatorType), pool);            
+            foreach (var simulatorKvp in SoccerPoolSimulator.Simulators)
+                Simulate(simulatorKvp.Value, pool);            
         }
 
         /// <summary>

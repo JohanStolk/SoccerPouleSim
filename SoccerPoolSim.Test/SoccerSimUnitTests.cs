@@ -77,6 +77,10 @@ namespace SoccerSim.Test
             TestResults(pool);
         }
 
+        /// <summary>
+        /// test the results in given pool
+        /// </summary>
+        /// <param name="pool"></param>
         private void TestResults(Pool pool)
         {
             pool.GenerateResults();
@@ -95,6 +99,7 @@ namespace SoccerSim.Test
                 previousResult = result;
             }
         }
+
         /// <summary>
         /// test all simulators
         /// </summary>

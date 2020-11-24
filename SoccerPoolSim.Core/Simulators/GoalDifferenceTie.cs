@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// abstract base class for all simulators, contains nested classes with specific implementations
+    /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>
-        /// this simulator generates a tie with different goal difference to test sorting
+        /// this simulator generates a tie with different 'goal difference' values to test sorting
         /// </summary>
         public class GoalDifferenceTie : SoccerPoolSimulator
         {

@@ -15,7 +15,7 @@ namespace SoccerPoolSim.Core
         /// </summary>
         public string Name { get; init; }
         /// <summary>
-        /// Team Rating [0f..1f] 0f = loser 1f = winner, higher rated teams have more chance of winning against lower rated teams
+        /// Team Rating [0f..1f] 0f = loser, 1f = winner, higher rated teams have more chance of winning against lower rated teams
         /// </summary>
         public float Rating { get; set; } = 0.5f;
 

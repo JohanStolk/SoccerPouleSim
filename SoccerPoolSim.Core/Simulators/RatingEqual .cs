@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SoccerPoolSim.Core
 {
+    /// <summary>
+    /// abstract base class for all simulators, contains nested classes with specific implementations
+    /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
         /// <summary>

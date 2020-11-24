@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace SoccerPoolSim.Core
 {
     /// <summary>
-    /// abstract base class for all simulators, implemented as nested classes in this partial class
+    /// abstract base class for all simulators, contains nested classes with specific implementations 
+    /// (in seperate files using partial class construct)
     /// </summary>
     public abstract partial class SoccerPoolSimulator : ISoccerPoolSimulator
     {
@@ -23,7 +24,7 @@ namespace SoccerPoolSim.Core
         public abstract void Simulate(Pool pool);
 
         /// <summary>
-        /// the collection of all simulators, key = simulator name
+        /// the static collection of all simulators, key = simulator name
         /// </summary>
         public static Dictionary<string, SoccerPoolSimulator> Simulators { get { return simulators; } }
 
@@ -33,7 +34,7 @@ namespace SoccerPoolSim.Core
         private static Random random = new();
 
         /// <summary>
-        /// code to generate the Simulators collection using in the website & unit tests
+        /// code to generate the Simulators collection using reflection for use in the website & unit tests
         /// </summary>
         private static readonly List<Type> simulatorTypes = SoccerSimTools.FindAllDerivedTypes<SoccerPoolSimulator>();
         private static readonly Dictionary<string, SoccerPoolSimulator> simulators = new();
